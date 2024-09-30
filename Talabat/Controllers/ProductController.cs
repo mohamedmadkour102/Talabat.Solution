@@ -23,6 +23,7 @@ namespace Talabat.Controllers
         }
 
         [HttpGet("{id}")]
+        //
         public async Task<ActionResult<IEnumerable<Product>>> GetProduct(int id)
         {
             var product = await _productRepo.GetAsync(id);
