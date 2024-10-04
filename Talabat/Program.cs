@@ -36,7 +36,7 @@ namespace Talabat
             try
             {
                 await _dbContext.Database.MigrateAsync();
-                StoreContextSeed.SeedAsync(_dbContext);
+                await StoreContextSeed.SeedAsync(_dbContext);
 
 
             }

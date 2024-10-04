@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Talabat.Core.Entities;
 using Talabat.Core.Repositories.Contract;
+using Talabat.Core.Specifications;
 
 namespace Talabat.Repository.Data
 {
@@ -19,14 +20,16 @@ namespace Talabat.Repository.Data
         }
         public async Task<IEnumerable<T>> GetAllAsync()
         {
-            if (typeof(T)== typeof(Product))
+            if (typeof(T) == typeof(Product))
             {
-            return (IEnumerable<T>) await _storeContext.Set<Product>().Include(P=>P.Brand).Include(p=>p.Category).ToListAsync();
+                return (IEnumerable<T>)await _storeContext.Set<Product>().Include(P => P.Brand).Include(p => p.Category).ToListAsync();
 
             }
             return await _storeContext.Set<T>().ToListAsync();
+            // why tolist?
 
         }
+
 
         public async Task<T> GetAsync(int id)
         {
@@ -37,6 +40,15 @@ namespace Talabat.Repository.Data
             }
             return await _storeContext.Set<T>().FindAsync(id);
             // find better than firstor default bec it search locally first 
+        }
+        public async Task<IEnumerable<T>> GetAllWithSpecAsync(ISpecification<T> specification)
+        {
+            return await SpecificationEvaluator<T>.GetQuery(_storeContext.Set<T>(), specification).ToListAsync();
+        }
+
+        public async Task<T> GetWithSpecAsync(ISpecification<T> specification)
+        {
+            return await SpecificationEvaluator<T>.GetQuery(_storeContext.Set<T>(), specification).FirstOrDefaultAsync(); 
         }
     }
 }
