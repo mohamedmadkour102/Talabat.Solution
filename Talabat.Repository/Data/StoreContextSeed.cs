@@ -16,7 +16,7 @@ namespace Talabat.Repository.Data
             var Brands = JsonSerializer.Deserialize<List<ProductBrand>>(BrandsData);
             if (Brands.Count() > 0)
             {
-              if (_dbcontext.productBrands.Count() >0)
+              if (_dbcontext.productBrands.Count() == 0)
                 {
                     foreach (var Brand in Brands)
                     {
