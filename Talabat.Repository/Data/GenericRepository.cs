@@ -29,10 +29,7 @@ namespace Talabat.Repository.Data
 
         }
 
-        public Task<IEnumerable<T>> GetAllWithSpecAsync(ISpecification<T> specification)
-        {
-            throw new NotImplementedException();
-        }
+
 
         public async Task<T> GetAsync(int id)
         {
@@ -45,9 +42,14 @@ namespace Talabat.Repository.Data
             // find better than firstor default bec it search locally first 
         }
 
-        public Task<T> GetWithSpecAsync(ISpecification<T> specification)
+        public async Task<IEnumerable<T>> GetAllWithSpecAsync(ISpecification<T> specification)
         {
-            throw new NotImplementedException();
+            return await SpecificationEvaluator<T>.GetQuery(_storeContext.Set<T>(), specification).ToListAsync();
+        }
+
+        public async Task<T> GetWithSpecAsync(ISpecification<T> specification)
+        {
+            return await SpecificationEvaluator<T>.GetQuery(_storeContext.Set<T>(), specification).FirstOrDefaultAsync();
         }
     }
 }
