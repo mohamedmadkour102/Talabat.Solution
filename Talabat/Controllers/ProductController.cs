@@ -3,14 +3,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Talabat.Core.Entities;
 using Talabat.Core.Repositories.Contract;
-<<<<<<< Updated upstream
-=======
+
 using Talabat.Core.Specifications;
 using Talabat.Core.Specifications.ProductSpecification;
 using Talabat.DTO_s;
 using Talabat.Errors;
 using Talabat.Helpers;
->>>>>>> Stashed changes
+
 
 namespace Talabat.Controllers
 {
@@ -33,12 +32,12 @@ namespace Talabat.Controllers
             _mapper = mapper;
         }
         [HttpGet]
-<<<<<<< Updated upstream
+
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         {
             var product  = await _productRepo.GetAllAsync();
             return Ok(product);
-=======
+
         public async Task<ActionResult<Pagination<ProductDto>>> GetProducts([FromQuery]ProductSpecParams Params )
         {
             var spec = new ProductWithBrandAndCategorySpecifications(Params);
@@ -59,7 +58,7 @@ namespace Talabat.Controllers
             return Ok(new Pagination<ProductDto>(Params.PageIndex, Params.PageSize, MappedProduct , count));
 
 
->>>>>>> Stashed changes
+
         }
         // swagger edition fe 7alet reg3 el response tmam aw 7sal error 
         // hna 2oltlo en el return hykon mn no3 ProductDto talama el status code b 200
@@ -76,9 +75,9 @@ namespace Talabat.Controllers
             {
                 return NotFound(new {Message = "Not Found" , StatusCode = 404 });
             }
-<<<<<<< Updated upstream
+
             return Ok(product);
-=======
+
             return Ok(_mapper.Map<Product , ProductDto>(product)); 
         }
 
@@ -93,7 +92,7 @@ namespace Talabat.Controllers
         {
             var brand = await _categoryRepo.GetAllAsync();
             return Ok(brand);
->>>>>>> Stashed changes
+
         }
     }
 }
