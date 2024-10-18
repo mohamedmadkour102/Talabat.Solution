@@ -9,6 +9,10 @@ using StackExchange.Redis;
 using Talabat.Core.Entities;
 using Talabat.Core.Entities.Identity;
 using Talabat.Core.Repositories.Contract;
+using Talabat.Errors;
+using Talabat.Helpers;
+using Talabat.MiddleWares;
+using Talabat.Repository;
 using Talabat.Repository.Data;
 using Talabat.Repository.Data.Identity;
 
@@ -109,17 +113,25 @@ namespace Talabat
             // Â«ÌÃÌ» «··Ì ⁄‰œÌ ›Ì «·ﬂ« ‘ ÊÌ⁄„· —«‰ ⁄«œÌ 
 
             // Configure the HTTP request pipeline.
+            app.UseMiddleware<ExceptionMiddleware>();
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
 
+           /// app.UseStatusCodePagesWithRedirects("/Errors/{0}");
+            app.UseStatusCodePagesWithReExecute("/Errors/{0}");
+
+
+
+            // app.UseDeveloperExceptionPage(); 
+            // mn awel .net 6.0 , msh lazem t3mlha register , 2bl kda lazem 
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
 
-
+            app.UseStaticFiles();
             app.MapControllers();
 
             app.Run();
