@@ -17,11 +17,11 @@ namespace Talabat.Repository.Data
         {
             _storeContext = storeContext;
         }
-        public async Task<IEnumerable<T>> GetAllAsync()
+        public async Task<IReadOnlyList<T>> GetAllAsync()
         {
             if (typeof(T)== typeof(Product))
             {
-            return (IEnumerable<T>) await _storeContext.Set<Product>().Include(P=>P.Brand).Include(p=>p.Category).ToListAsync();
+            return (IReadOnlyList<T>) await _storeContext.Set<Product>().Include(P=>P.Brand).Include(p=>p.Category).ToListAsync();
 
             }
             return await _storeContext.Set<T>().ToListAsync();
@@ -38,5 +38,23 @@ namespace Talabat.Repository.Data
             return await _storeContext.Set<T>().FindAsync(id);
             // find better than firstor default bec it search locally first 
         }
+<<<<<<< Updated upstream
+=======
+
+        public async Task<IReadOnlyList<T>> GetAllWithSpecAsync(ISpecification<T> specification)
+        {
+            return await SpecificationEvaluator<T>.GetQuery(_storeContext.Set<T>(), specification).ToListAsync();
+        }
+
+        public async Task<T> GetWithSpecAsync(ISpecification<T> specification)
+        {
+            return await SpecificationEvaluator<T>.GetQuery(_storeContext.Set<T>(), specification).FirstOrDefaultAsync();
+        }
+
+        public Task<int> GetCountWithSpecAsync(ISpecification<T> specification)
+        {
+            throw new NotImplementedException();
+        }
+>>>>>>> Stashed changes
     }
 }

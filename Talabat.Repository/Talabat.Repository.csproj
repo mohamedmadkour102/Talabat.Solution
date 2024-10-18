@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -12,6 +12,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Talabat.Core\Talabat.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Data\Identity\configuration\" />
+    <Folder Include="Data\Identity\DataSeeding\" />
   </ItemGroup>
 
 </Project>
